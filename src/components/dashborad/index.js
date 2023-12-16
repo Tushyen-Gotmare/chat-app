@@ -4,6 +4,7 @@ import { useProfile } from "../../context/profile.context"
 import EditableInput from './EditableInput'
 import { database } from '../../misc/firebase'
 import ProviderBlock from './ProviderBlock'
+import AvatarUploadBtn from './AvatarUploadBtn'
 
 const Dashboard = ({onSignOut}) => {
 
@@ -45,6 +46,7 @@ Alert.success('Nickname has been updated', 4000);
     onSave={onSave}
     label={<h6 className="mb-2">Nickname</h6>}
     />
+    <AvatarUploadBtn/>
    </Drawer.Body>
    <Drawer.Footer>
     <Button block color="red"  onClick={onSignOut}>
