@@ -1,8 +1,15 @@
 import React from 'react'
-import { Nav } from 'rsuite'
+import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom.min'
+import { Loader, Nav } from 'rsuite'
 import RoomItem from './RoomItem'
+import { useRooms } from '../../context/Room.context'
+
 
 const ChatRoomList = ({aboveElHeight}) => {
+
+  const rooms = useRooms();
+  const location = useLocation();
+
   return (
     <Nav
     appearance="subtle"
@@ -10,11 +17,16 @@ const ChatRoomList = ({aboveElHeight}) => {
     reversed
     className="overflow-y-scroll custom-scroll"
     style={{ height: `calc(100% - ${aboveElHeight}px)`}}
-    
+    activeKey={location.pathname}
     >
-        <Nav.Item>
-            <RoomItem/>
+      {!rooms && ( <Loader  center vertical content="Loading" speed="slow" size="md"/>)}
+      {rooms && rooms.length > 0 && rooms.map(room => (
+        <Nav.Item componentClass={Link} to={`/chat/${room.id}`} key={room.id}
+        eventKey={`/chat/${room.id}`}>
+            <RoomItem room={room}/>
         </Nav.Item>
+      ))}
+        
 
     </Nav>
   )
